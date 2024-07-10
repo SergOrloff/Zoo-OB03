@@ -1,41 +1,3 @@
-# Зоопарк: Пример использования классов и полиморфизма
-
-## Описание проекта
-
-Данный проект представляет собой симуляцию зоопарка с использованием объектно-ориентированного программирования (ООП) на языке Python. В проекте реализованы базовые классы для животных и сотрудников зоопарка, а также функции для сохранения и загрузки данных о зоопарке в файлы.
-
-## Структура проекта
-
-Проект состоит из следующих основных компонентов:
-1. **Классы для животных**:
-    - `Animal`: базовый класс для всех животных.
-    - `Bird`: подкласс, представляющий птиц.
-    - `Mammal`: подкласс, представляющий млекопитающих.
-    - `Reptile`: подкласс, представляющий рептилий.
-
-2. **Классы для сотрудников зоопарка**:
-    - `ZooKeeper`: класс, представляющий смотрителя зоопарка.
-    - `Veterinarian`: класс, представляющий ветеринара.
-
-3. **Класс Zoo**: основной класс, представляющий зоопарк и содержащий методы для добавления животных и сотрудников, а также для сохранения и загрузки данных.
-
-4. **Функция для демонстрации полиморфизма**: функция `animal_sound`, которая принимает список животных и вызывает для каждого из них метод `make_sound`.
-
-## Установка
-
-Для работы программы необходима установка следующих библиотек:
-- `playsound` для воспроизведения звуков.
-
-Для установки библиотеки `playsound` выполните следующую команду:
-```sh
-pip install playsound
-```
-
-## Запуск программы
-
-1. Создайте файл `zoo.py` и вставьте в него следующий код:
-
-```python
 import json
 from playsound import playsound
 
@@ -59,7 +21,7 @@ class Bird(Animal):
 
     def make_sound(self):
         playsound('sound/popugai.wav')
-        return str(self.name) + " орёт 'Попка-дурак'"
+        return str(self.name)+" орёт 'Попка-дурак'"
 
 # Подкласс Mammal
 class Mammal(Animal):
@@ -69,7 +31,7 @@ class Mammal(Animal):
 
     def make_sound(self):
         playsound('sound/lion.wav')
-        return str(self.name) + " рычит: Р-р-р-р-р"
+        return str(self.name)+" рычит: Р-р-р-р-р"
 
 # Подкласс Reptile
 class Reptile(Animal):
@@ -79,7 +41,7 @@ class Reptile(Animal):
 
     def make_sound(self):
         playsound('sound/snake.wav')
-        return str(self.name) + " шипит: Ш-ш-ш-ш-ш-ш"
+        return str(self.name)+" шипит: Ш-ш-ш-ш-ш-ш"
 
 # Функция для демонстрации полиморфизма
 def animal_sound(animals):
@@ -105,6 +67,7 @@ class Zoo:
                     "type": type(animal).__name__,
                     "name": animal.name,
                     "age": animal.age,
+                    # Сохраняем конкретное имя атрибута в зависимости от типа животного
                     "wing_span": animal.wing_span if isinstance(animal, Bird) else None,
                     "fur_color": animal.fur_color if isinstance(animal, Mammal) else None,
                     "scale_type": animal.scale_type if isinstance(animal, Reptile) else None
@@ -129,6 +92,7 @@ class Zoo:
         self.animals = []
         self.staff = []
         for animal_data in data["animals"]:
+            # Обработка различных типов животных
             if animal_data["type"] == "Bird":
                 animal = Bird(animal_data["name"], animal_data["age"], animal_data["wing_span"])
             elif animal_data["type"] == "Mammal":
@@ -156,7 +120,16 @@ class ZooKeeper:
         self.age = age
 
     def feed_animal(self, animal):
-        return f"{self.name} кормит {animal.name}"
+        if animal.name == 'Попугай':
+            rod_animal = 'попугая'
+        elif animal.name == 'Лев':
+            rod_animal = 'льва'
+        elif animal.name == 'Змея':
+            rod_animal = 'змею'
+        else:
+            rod_animal = animal.name
+
+        return f"{self.name} кормит {rod_animal}"
 
 # Класс Veterinarian
 class Veterinarian:
@@ -165,7 +138,15 @@ class Veterinarian:
         self.age = age
 
     def heal_animal(self, animal):
-        return f"{self.name} лечит {animal.name}"
+        if animal.name == 'Попугай':
+            rod_animal = 'попугая'
+        elif animal.name == 'Лев':
+            rod_animal = 'льва'
+        elif animal.name == 'Змея':
+            rod_animal = 'змею'
+        else:
+            rod_animal = animal.name
+        return f"{self.name} лечит {rod_animal}"
 
 # Пример использования
 if __name__ == "__main__":
@@ -211,36 +192,13 @@ if __name__ == "__main__":
     for staff in new_zoo.staff:
         print(f"{staff.name}, возраст: {staff.age}")
 
+    # Выводим информацию офункциях персонала (кто каких животных кормит, а кто их лечит)
+    # кормежники
     print(zookeeper1.feed_animal(bird))
     print(zookeeper2.feed_animal(mammal))
     print(zookeeper2.feed_animal(reptile))
-```
 
-2. Убедитесь, что в папке проекта есть папка `sound` с нужными звуковыми файлами:
-    ```
-    sound/
-        popugai.wav
-        lion.wav
-        snake.wav
-    ```
-
-3. Запустите программу:
-    ```sh
-    python zoo.py
-    ```
-
-## Функциональные возможности
-
-- **Создание и добавление животных в зоопарк**: Поддерживаются птицы, млекопитающие и рептилии.
-- **Создание и добавление сотрудников в зоопарк**: Поддерживаются смотрители зоопарка и ветеринары.
-- **Воспроизведение звуков животных**: Используется библиотека `playsound`.
-- **Сохранение и загрузка данных о зоопарке в файл**: Данные сохраняются в формате JSON.
-- **Полиморфизм**: Вызов методов `make_sound` для различных типов животных.
-
-## Контакты
-
-Для вопросов и предложений вы можете связаться с автором проекта по электронной почте: [6202818@gmail.com](mailto:6202818@gmail.com).
-
-## Лицензия
-
-Этот проект лицензирован под MIT License. Подробности см. в файле `LICENSE`.
+    # лечители
+    print(veterinarian2.heal_animal(bird))
+    print(veterinarian1.heal_animal(mammal))
+    print(veterinarian1.heal_animal(reptile))

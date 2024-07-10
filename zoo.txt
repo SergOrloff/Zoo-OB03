@@ -1,0 +1,50 @@
+{
+    "animals": [
+        {
+            "type": "Bird",
+            "name": "Попугай",
+            "age": 2,
+            "wing_span": 30,
+            "fur_color": null,
+            "scale_type": null
+        },
+        {
+            "type": "Mammal",
+            "name": "Лев",
+            "age": 5,
+            "wing_span": null,
+            "fur_color": "Golden",
+            "scale_type": null
+        },
+        {
+            "type": "Reptile",
+            "name": "Змея",
+            "age": 3,
+            "wing_span": null,
+            "fur_color": null,
+            "scale_type": "Scaly"
+        }
+    ],
+    "staff": [
+        {
+            "type": "ZooKeeper",
+            "name": "Иван Змеевский",
+            "age": 30
+        },
+        {
+            "type": "ZooKeeper",
+            "name": "Сергей Коровин",
+            "age": 25
+        },
+        {
+            "type": "Veterinarian",
+            "name": "Доктор Айболит",
+            "age": 45
+        },
+        {
+            "type": "Veterinarian",
+            "name": "Ветеринар Маша Иванова",
+            "age": 26
+        }
+    ]
+}
